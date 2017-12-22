@@ -11,12 +11,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import static android.widget.Toast.LENGTH_SHORT;
+import static java.lang.Math.E;
 
 public class MainActivity extends AppCompatActivity {
 
     Button a[] = new Button[20];
     TextView add,data;
-    int reset,sub,go,accumulator,b,c,d,e,h,l,m,carry,zero,reg=-1;
+    int reset,sub,go,accumulator,b,c,d,e,h,l,m,carry,zero,reg=-1,sum;
     Bundle memory = new Bundle();
 
     @Override
@@ -530,7 +531,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        for(int i=0;i<opcodes.size();i++)
+                        for(int i=0;opcodes.get(i)!=0x76;i++)
                         {
                             switch (opcodes.get(i))
                             {
@@ -738,7 +739,6 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                                 case 0x3e:
                                     accumulator=opcodes.get(i+1);
-                                    Toast.makeText(MainActivity.this,accumulator,Toast.LENGTH_LONG).show();
                                     i++;
                                     break;
                                 case 0x06:
@@ -771,6 +771,7 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                                 case 0x32:
                                     String lb,hb,ef;
+                                    zero=0;
                                     lb = Integer.toString(opcodes.get(i+1),16);
                                     if (lb.length()==1)
                                     {
@@ -787,26 +788,67 @@ public class MainActivity extends AppCompatActivity {
                                     break;
                                 case 0x87:
                                     accumulator+=accumulator;
+                                    if (Integer.toHexString(accumulator).length()==3)
+                                    {
+                                        accumulator-=0x100;
+                                        carry=1;
+                                    }
+                                    break;
                                 case 0x80:
                                     accumulator+=b;
+                                    if (Integer.toHexString(accumulator).length()==3)
+                                    {
+                                        accumulator-=0x100;
+                                        carry=1;
+                                    }
                                     break;
                                 case 0x81:
                                     accumulator+=c;
+                                    if (Integer.toHexString(accumulator).length()==3)
+                                    {
+                                        accumulator-=0x100;
+                                        carry=1;
+                                    }
                                     break;
                                 case 0x82:
                                     accumulator+=d;
+                                    if (Integer.toHexString(accumulator).length()==3)
+                                    {
+                                        accumulator-=0x100;
+                                        carry=1;
+                                    }
                                     break;
                                 case 0x83:
                                     accumulator+=e;
+                                    if (Integer.toHexString(accumulator).length()==3)
+                                    {
+                                        accumulator-=0x100;
+                                        carry=1;
+                                    }
                                     break;
                                 case 0x84:
                                     accumulator+=h;
+                                    if (Integer.toHexString(accumulator).length()==3)
+                                    {
+                                        accumulator-=0x100;
+                                        carry=1;
+                                    }
                                     break;
                                 case 0x85:
                                     accumulator+=l;
+                                    if (Integer.toHexString(accumulator).length()==3)
+                                    {
+                                        accumulator-=0x100;
+                                        carry=1;
+                                    }
                                     break;
                                 case 0x86:
                                     accumulator+=m;
+                                    if (Integer.toHexString(accumulator).length()==3)
+                                    {
+                                        accumulator-=0x100;
+                                        carry=1;
+                                    }
                                     break;
                                 case 0x3d:
                                     accumulator--;
@@ -893,7 +935,7 @@ public class MainActivity extends AppCompatActivity {
                                 case 0xc2:
 //                                    Toast.makeText(MainActivity.this,"i:"+i+"zero:"+zero,Toast.LENGTH_LONG).show();
 //                                    Log.d("AAA","i:"+i+"Zero:"+zero);
-                                    if (zero!=1)
+                                    if (reg!=0)
                                     {
                                         String lbs,hbs,efs;
                                         lbs = Integer.toString(opcodes.get(i+1),16);
@@ -914,14 +956,11 @@ public class MainActivity extends AppCompatActivity {
                                     else
                                     {
                                         i+=2;
+                                        reg=-1;
                                     }
                                     break;
                                 default:
-                                    Toast.makeText(MainActivity.this,"Under development not all features emulated"+Integer.toHexString(opcodes.get(i)),Toast.LENGTH_LONG).show();
-                            }
-                            if (reg==0)
-                            {
-                                zero=1;
+                                    Toast.makeText(MainActivity.this,"Under development not all features emulated",Toast.LENGTH_LONG).show();
                             }
                         }
                     }
@@ -931,7 +970,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onStart() {
         super.onStart();
