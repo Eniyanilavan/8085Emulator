@@ -1,8 +1,14 @@
 package com.example.eniyanilavan.a8085emulator;
 
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,17 +19,22 @@ import java.util.ArrayList;
 import static android.widget.Toast.LENGTH_SHORT;
 import static java.lang.Math.E;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Button a[] = new Button[20];
     TextView add,data;
     int reset,sub,go,accumulator,b,c,d,e,h,l,m,carry,zero,reg=-1,sum;
     Bundle memory = new Bundle();
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        drawer = (DrawerLayout)findViewById(R.id.drawable);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this,drawer,R.string.open,R.string.close);
         add = (TextView)findViewById(R.id.address);
         data= (TextView)findViewById(R.id.data);
         a[0]=(Button)findViewById(R.id.res);
@@ -46,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
         a[17]=(Button)findViewById(R.id.n1);
         a[18]=(Button)findViewById(R.id.n2);
         a[19]=(Button)findViewById(R.id.n3);
-
+        drawer.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        navigationView= (NavigationView)findViewById(R.id.nav_bar);
+        navigationView.setNavigationItemSelectedListener(this);
         a[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -959,6 +974,9 @@ public class MainActivity extends AppCompatActivity {
                                         reg=-1;
                                     }
                                     break;
+                                case 0x00:
+                                    break;
+//                                case 0x
                                 default:
                                     Toast.makeText(MainActivity.this,"Under development not all features emulated",Toast.LENGTH_LONG).show();
                             }
@@ -976,5 +994,24 @@ public class MainActivity extends AppCompatActivity {
         reset=1;
         sub=1;
         go=0;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id==R.id.opc)
+        {
+
+        }
+        return false;
     }
 }
