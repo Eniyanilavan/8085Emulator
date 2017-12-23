@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.eniyanilavan.a8085emulator.MainActivity"
+    android:id="@+id/drawable">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignLeft="@+id/dec"
+            android:layout_alignStart="@+id/dec"
+            android:layout_alignTop="@+id/n1"
+            android:text="NEXT" />
+
+        <Button
+            android:id="@+id/n0"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignBaseline="@+id/n2"
+            android:layout_alignBottom="@+id/n2"
+            android:layout_alignLeft="@+id/n4"
+            android:layout_alignStart="@+id/n4"
+            android:text="0\nSUB" />
+
+        <Button
+            android:id="@+id/n1"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignBaseline="@+id/n2"
+            android:layout_alignBottom="@+id/n2"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toLeftOf="@+id/n2"
+            android:layout_toStartOf="@+id/n2"
+            android:text="1\nREG" />
+
+        <Button
+            android:id="@+id/n2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignLeft="@+id/n6"
+            android:layout_alignStart="@+id/n6"
+            android:layout_below="@+id/n4"
+            android:text="2\nTW" />
+
+        <Button
+            android:id="@+id/n3"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignBaseline="@+id/n2"
+            android:layout_alignBottom="@+id/n2"
+            android:layout_alignLeft="@+id/n7"
+            android:layout_alignStart="@+id/n7"
+            android:text="3\nTR" />
+
+        <Button
+            android:id="@+id/dec"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignLeft="@+id/exe"
+            android:layout_alignStart="@+id/exe"
+            android:layout_below="@+id/n9"
+            android:text="DEC" />
+
+        <Button
+            android:id="@+id/n4"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignBaseline="@+id/n5"
+            android:layout_alignBottom="@+id/n5"
+            android:layout_alignLeft="@+id/n8"
+            android:layout_alignStart="@+id/n8"
+            android:text="4\nBLOC" />
+
+        <Button
+            android:id="@+id/n5"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignLeft="@+id/n1"
+            android:layout_alignStart="@+id/n1"
+            android:layout_centerVertical="true"
+            android:text="5\nFILL" />
+
+        <Button
+            android:id="@+id/n6"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignLeft="@+id/a"
+            android:layout_alignStart="@+id/a"
+            android:layout_below="@+id/a"
+            android:text="6\nSER" />
+
+        <Button
+            android:id="@+id/n7"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_above="@+id/n2"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:text="7\nF2" />
+
+        <Button
+            android:id="@+id/exe"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/e"
+            android:layout_centerHorizontal="true"
+            android:text="EXEC" />
+
+        <Button
+            android:id="@+id/n8"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/c"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_toLeftOf="@+id/n5"
+            android:layout_toStartOf="@+id/n5"
+            android:text="8\nGO" />
+
+        <Button
+            android:id="@+id/n9"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_above="@+id/n5"
+            android:layout_alignLeft="@+id/n5"
+            android:layout_alignStart="@+id/n5"
+            android:text="9\nSNG" />
+
+        <Button
+            android:id="@+id/a"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignLeft="@+id/e"
+            android:layout_alignStart="@+id/e"
+            android:layout_below="@+id/d"
+            android:text="A  PH\nF3" />
+
+        <Button
+            android:id="@+id/b"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignLeft="@+id/n7"
+            android:layout_alignStart="@+id/n7"
+            android:layout_below="@+id/f"
+            android:text="B  SL\nBC" />
+
+        <Button
+            android:id="@+id/res"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_above="@+id/exe"
+            android:layout_centerHorizontal="true"
+            android:text="RES" />
+
+        <Button
+            android:id="@+id/c"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_above="@+id/exe"
+            android:layout_alignLeft="@+id/n8"
+            android:layout_alignStart="@+id/n8"
+            android:text="C  SH\nMOV" />
+
+        <Button
+            android:id="@+id/d"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_above="@+id/n9"
+            android:layout_alignLeft="@+id/n9"
+            android:layout_alignStart="@+id/n9"
+            android:text="D\nCMP" />
+
+        <Button
+            android:id="@+id/e"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignBaseline="@+id/d"
+            android:layout_alignBottom="@+id/d"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_toLeftOf="@+id/b"
+            android:layout_toStartOf="@+id/b"
+            android:text="E\nINS" />
+
+        <Button
+            android:id="@+id/f"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignBaseline="@+id/d"
+            android:layout_alignBottom="@+id/d"
+            android:layout_alignLeft="@+id/b"
+            android:layout_alignStart="@+id/b"
+            android:text="F\nDEL" />
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/b"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:hint="address"
+            android:maxLength="4"
+            android:textColor="@color/colorAccent"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/data"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/n1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:hint="data"
+            android:maxLength="2"
+            android:textColor="@color/colorAccent"
+            android:textSize="25sp" />
+    </RelativeLayout>
+    <android.support.design.widget.NavigationView
+        android:layout_width="300dp"
+        android:id="@+id/nav_bar"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/nav_menu">
+
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>

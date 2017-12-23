@@ -23,13 +23,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     Button a[] = new Button[20];
     TextView add,data;
-    int reset,sub,go,accumulator,b,c,d,e,h,l,carry,reg=-1,sp,s=0;
+    int reset,sub,go,accumulator,b,c,d,e,h,l,carry,sp,s=0,z=0,temp;
     String lsb,hsb,eff,pc,m;
     Bundle memory = new Bundle();
     ArrayList<Integer> stack = new ArrayList<>();
     private DrawerLayout drawer;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
+    boolean nextpoint=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -474,49 +475,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         a[15].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!(add.getText().toString().equals(""))) {
-                    int next = Integer.parseInt(add.getText().toString(),16)+1;
-                    if (!(add.getText().toString().equals(""))&&!(data.getText().toString().equals(""))) {
-                        if(data.length()!=2)
-                        {
-                            Toast.makeText(MainActivity.this,"Data requires two bit",Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            memory.putInt(add.getText().toString(), Integer.parseInt(data.getText().toString(), 16));
-                            if (memory.containsKey(Integer.toString(next, 16))) {
-                                add.setText(Integer.toString(next, 16));
-                                if (Integer.toString(memory.getInt(Integer.toString(next, 16)), 16).length()==1) {
-                                    data.setText("0"+Integer.toString(memory.getInt(Integer.toString(next, 16)), 16));
-                                }
-                                else
-                                {
-                                    data.setText(Integer.toString(memory.getInt(Integer.toString(next, 16)), 16));
-                                }
+                if (nextpoint) {
+                    if (!(add.getText().toString().equals(""))) {
+                        int next = Integer.parseInt(add.getText().toString(), 16) + 1;
+                        if (!(add.getText().toString().equals("")) && !(data.getText().toString().equals(""))) {
+                            if (data.length() != 2) {
+                                Toast.makeText(MainActivity.this, "Data requires two bit", Toast.LENGTH_LONG).show();
+                            } else {
+                                memory.putInt(add.getText().toString(), Integer.parseInt(data.getText().toString(), 16));
+                                if (memory.containsKey(Integer.toString(next, 16))) {
+                                    add.setText(Integer.toString(next, 16));
+                                    if (Integer.toString(memory.getInt(Integer.toString(next, 16)), 16).length() == 1) {
+                                        data.setText("0" + Integer.toString(memory.getInt(Integer.toString(next, 16)), 16));
+                                    } else {
+                                        data.setText(Integer.toString(memory.getInt(Integer.toString(next, 16)), 16));
+                                    }
 
+                                } else {
+                                    add.setText(Integer.toString(next, 16));
+                                    data.setText("");
+                                }
                             }
-                            else {
+                        } else {
+                            if (memory.containsKey(add.getText().toString())) {
+                                if (Integer.toString(memory.getInt(add.getText().toString()), 16).length() == 1) {
+                                    data.setText("0" + Integer.toString(memory.getInt(add.getText().toString()), 16));
+                                } else {
+                                    data.setText(Integer.toString(memory.getInt(add.getText().toString()), 16));
+                                }
+                            } else {
+                                memory.putInt(add.getText().toString(), 0);
                                 add.setText(Integer.toString(next, 16));
-                                data.setText("");
                             }
-                        }
-                    }
-                    else
-                    {
-                        if(memory.containsKey(add.getText().toString())){
-                            if (Integer.toString(memory.getInt(add.getText().toString()), 16).length()==1) {
-                                data.setText("0"+Integer.toString(memory.getInt(add.getText().toString()), 16));
-                            }
-                            else
-                            {
-                                data.setText(Integer.toString(memory.getInt(add.getText().toString()), 16));
-                            }
-                        }
-                        else {
-                            memory.putInt(add.getText().toString(),0);
-                            add.setText(Integer.toString(next,16));
                         }
                     }
                 }
+                nextpoint=true;
             }
         });
         a[5].setOnClickListener(new View.OnClickListener() {
@@ -1048,31 +1042,59 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     break;
                                 case 0x3d:
                                     accumulator--;
-                                    reg = accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0x05:
                                     b--;
-                                    reg = b;
+                                    z=0;
+                                    if (b==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0x0d:
                                     c--;
-                                    reg = c;
+                                    z=0;
+                                    if (c==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0x15:
                                     d--;
-                                    reg = d;
+                                    z=0;
+                                    if (d==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0x1d:
                                     e--;
-                                    reg = e;
+                                    z=0;
+                                    if (e==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0x25:
                                     h--;
-                                    reg = h;
+                                    z=0;
+                                    if (h==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0x2d:
                                     l--;
-                                    reg=l;
+                                    z=0;
+                                    if (l==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0x35:
                                     lsb = Integer.toString(l,16);
@@ -1086,7 +1108,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         hsb="0"+h;
                                     }
                                     m = hsb+lsb;
-                                    reg=memory.getInt(m)-1;
+                                    z=0;
+                                    if (memory.getInt(m)-1==0)
+                                    {
+                                        z=1;
+                                    }
                                     memory.putInt(m,memory.getInt(m)-1);
                                     break;
                                 case 0x3c:
@@ -1126,6 +1152,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     break;
                                 case 0x97:
                                     accumulator-=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     s=0;
                                     if (accumulator<0)
                                     {
@@ -1135,6 +1166,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     break;
                                 case 0x90:
                                     accumulator-=b;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     s=0;
                                     if (accumulator<0)
                                     {
@@ -1144,6 +1180,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     break;
                                 case 0x91:
                                     accumulator-=c;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     s=0;
                                     if (accumulator<0)
                                     {
@@ -1153,6 +1194,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     break;
                                 case 0x92:
                                     accumulator-=d;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     s=0;
                                     if (accumulator<0)
                                     {
@@ -1162,6 +1208,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     break;
                                 case 0x93:
                                     accumulator-=e;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     s=0;
                                     if (accumulator<0)
                                     {
@@ -1171,6 +1222,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     break;
                                 case 0x94:
                                     accumulator-=h;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     s=0;
                                     if (accumulator<0)
                                     {
@@ -1180,6 +1236,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     break;
                                 case 0x95:
                                     accumulator-=l;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     s=0;
                                     if (accumulator<0)
                                     {
@@ -1200,6 +1261,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     }
                                     m = hsb+lsb;
                                     accumulator-=memory.getInt(m);
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     s=0;
                                     if (accumulator<0)
                                     {
@@ -1209,6 +1275,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     break;
                                 case 0xd6:
                                     accumulator-=opcodes.get(i+1);
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     s=0;
                                     if (accumulator<0)
                                     {
@@ -1220,7 +1290,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 case 0x76:
                                     break;
                                 case 0xc2:
-                                    if (reg!=0)
+                                    if (z==0)
                                     {
                                         lsb = Integer.toString(opcodes.get(i+1),16);
                                         if (lsb.length()==1)
@@ -1239,11 +1309,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     else
                                     {
                                         i+=2;
-                                        reg=-1;
+                                        z=0;
                                     }
                                     break;
                                 case 0xca:
-                                    if (reg==0)
+                                    if (z==1)
                                     {
                                         lsb = Integer.toString(opcodes.get(i+1),16);
                                         if (lsb.length()==1)
@@ -1262,7 +1332,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     else
                                     {
                                         i+=2;
-                                        reg=-1;
+                                        z=0;
                                     }
                                     break;
                                 case 0x00:
@@ -1308,31 +1378,59 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     break;
                                 case 0xa7:
                                     accumulator = accumulator;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xa0:
                                     accumulator = accumulator&b;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xa1:
                                     accumulator = accumulator&c;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xa2:
                                     accumulator = accumulator&d;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xa3:
                                     accumulator = accumulator&e;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xa4:
                                     accumulator = accumulator&h;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xa5:
                                     accumulator = accumulator&l;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xa6:
                                     lsb = Integer.toString(l,16);
@@ -1347,40 +1445,76 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     }
                                     m = hsb+lsb;
                                     accumulator = accumulator&memory.getInt(eff);
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xe6:
                                     accumulator = accumulator & opcodes.get(i+1);
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     i+=1;
                                     break;
                                 case 0xaf:
                                     accumulator = 0;
-                                    reg=0;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xa8:
                                     accumulator = accumulator^b;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xa9:
                                     accumulator = accumulator^c;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xaa:
                                     accumulator = accumulator^d;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xab:
                                     accumulator = accumulator^e;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xac:
                                     accumulator = accumulator^h;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xad:
                                     accumulator = accumulator^l;
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xae:
                                     lsb = Integer.toString(l,16);
@@ -1395,11 +1529,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     }
                                     m = hsb+lsb;
                                     accumulator = accumulator^memory.getInt(eff);
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     break;
                                 case 0xee:
                                     accumulator = accumulator ^ opcodes.get(i+1);
-                                    reg=accumulator;
+                                    z=0;
+                                    if (accumulator==0)
+                                    {
+                                        z=1;
+                                    }
                                     i+=1;
                                     break;
                                 case 0xd3:
@@ -1534,7 +1676,357 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         carry=1;
                                     }
                                     break;
-
+                                case 0xda:
+                                    if (carry==1)
+                                    {
+                                        lsb = Integer.toString(opcodes.get(i+1),16);
+                                        if (lsb.length()==1)
+                                        {
+                                            lsb="0"+lsb;
+                                        }
+                                        hsb = Integer.toString(opcodes.get(i+2),16);
+                                        if (hsb.length()==1)
+                                        {
+                                            hsb="0"+hsb;
+                                        }
+                                        eff = hsb+lsb;
+                                        i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
+                                        Log.d("AAA","mul:"+accumulator+" b:"+b);
+                                    }
+                                    else
+                                    {
+                                        i+=2;
+                                        carry=0;
+                                    }
+                                    break;
+                                case 0xd2:
+                                    if (carry==0)
+                                    {
+                                        lsb = Integer.toString(opcodes.get(i+1),16);
+                                        if (lsb.length()==1)
+                                        {
+                                            lsb="0"+lsb;
+                                        }
+                                        hsb = Integer.toString(opcodes.get(i+2),16);
+                                        if (hsb.length()==1)
+                                        {
+                                            hsb="0"+hsb;
+                                        }
+                                        eff = hsb+lsb;
+                                        i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
+                                        Log.d("AAA","mul:"+accumulator+" b:"+b);
+                                    }
+                                    else
+                                    {
+                                        i+=2;
+                                        carry=0;
+                                    }
+                                    break;
+                                case 0xfa:
+                                    if (s==1)
+                                    {
+                                        lsb = Integer.toString(opcodes.get(i+1),16);
+                                        if (lsb.length()==1)
+                                        {
+                                            lsb="0"+lsb;
+                                        }
+                                        hsb = Integer.toString(opcodes.get(i+2),16);
+                                        if (hsb.length()==1)
+                                        {
+                                            hsb="0"+hsb;
+                                        }
+                                        eff = hsb+lsb;
+                                        i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
+                                        Log.d("AAA","mul:"+accumulator+" b:"+b);
+                                    }
+                                    else
+                                    {
+                                        i+=2;
+                                        s=0;
+                                    }
+                                    break;
+                                case 0xf2:
+                                    if (s==0)
+                                    {
+                                        lsb = Integer.toString(opcodes.get(i+1),16);
+                                        if (lsb.length()==1)
+                                        {
+                                            lsb="0"+lsb;
+                                        }
+                                        hsb = Integer.toString(opcodes.get(i+2),16);
+                                        if (hsb.length()==1)
+                                        {
+                                            hsb="0"+hsb;
+                                        }
+                                        eff = hsb+lsb;
+                                        i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
+                                        Log.d("AAA","mul:"+accumulator+" b:"+b);
+                                    }
+                                    else
+                                    {
+                                        i+=2;
+                                        s=0;
+                                    }
+                                    break;
+                                case 0xc3:
+                                    lsb = Integer.toString(opcodes.get(i+1),16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(opcodes.get(i+2),16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    eff = hsb+lsb;
+                                    i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
+                                    i+=2;
+                                    break;
+                                case 0x03:
+                                    c++;
+                                    if (Integer.toString(c,16).length()==3)
+                                    {
+                                        c-=0x100;
+                                        b++;
+                                    }
+                                    break;
+                                case 0x13:
+                                    e++;
+                                    if (Integer.toString(e,16).length()==3)
+                                    {
+                                        e-=0x100;
+                                        d++;
+                                    }
+                                    break;
+                                case 0x23:
+                                    l++;
+                                    if (Integer.toString(l,16).length()==3)
+                                    {
+                                        l-=0x100;
+                                        h++;
+                                    }
+                                    break;
+                                case 0x33:
+                                    sp++;
+                                    break;
+                                case 0x01:
+                                    lsb = Integer.toString(opcodes.get(i+1),16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(opcodes.get(i+2),16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    b=Integer.parseInt(hsb,16);
+                                    c=Integer.parseInt(lsb,16);
+                                    i+=2;
+                                    break;
+                                case 0x11:
+                                    lsb = Integer.toString(opcodes.get(i+1),16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(opcodes.get(i+2),16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    d=Integer.parseInt(hsb,16);
+                                    e=Integer.parseInt(lsb,16);
+                                    i+=2;
+                                    break;
+                                case 0x21:
+                                    lsb = Integer.toString(opcodes.get(i+1),16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(opcodes.get(i+2),16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    h=Integer.parseInt(hsb,16);
+                                    l=Integer.parseInt(lsb,16);
+                                    i+=2;
+                                    break;
+                                case 0x31:
+                                    lsb = Integer.toString(opcodes.get(i+1),16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(opcodes.get(i+2),16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    sp = Integer.parseInt(hsb,16)+Integer.parseInt(lsb,16);
+                                    i+=2;
+                                    break;
+//                                case 0xcd:
+//                                    lsb = Integer.toString(opcodes.get(i+1),16);
+//                                    if (lsb.length()==1)
+//                                    {
+//                                        lsb="0"+lsb;
+//                                    }
+//                                    hsb = Integer.toString(opcodes.get(i+2),16);
+//                                    if (hsb.length()==1)
+//                                    {
+//                                        hsb="0"+hsb;
+//                                    }
+//                                    i = Integer.parseInt(hsb,16)+Integer.parseInt(lsb,16);
+//                                    break;
+                                case 0x2f:
+                                    accumulator = ~accumulator;
+                                    break;
+                                case 0x3f:
+                                    carry = ~carry;
+                                    break;
+                                case 0xbf:
+                                    if (accumulator==accumulator)
+                                    {
+                                        z=1;
+                                    }
+                                    else if (accumulator<accumulator)
+                                    {
+                                        carry=1;
+                                    }
+                                    else
+                                    {
+                                        carry=0;
+                                        z=0;
+                                    }
+                                    break;
+                                case 0xb8:
+                                    if (accumulator==b)
+                                    {
+                                        z=1;
+                                    }
+                                    else if (accumulator<b)
+                                    {
+                                        carry=1;
+                                    }
+                                    else
+                                    {
+                                        carry=0;
+                                        z=0;
+                                    }
+                                    break;
+                                case 0xb9:
+                                    if (accumulator==c)
+                                    {
+                                        z=1;
+                                    }
+                                    else if (accumulator<c)
+                                    {
+                                        carry=1;
+                                    }
+                                    else
+                                    {
+                                        carry=0;
+                                        z=0;
+                                    }
+                                    break;
+                                case 0xba:
+                                    if (accumulator==d)
+                                    {
+                                        z=1;
+                                    }
+                                    else if (accumulator<d)
+                                    {
+                                        carry=1;
+                                    }
+                                    else
+                                    {
+                                        carry=0;
+                                        z=0;
+                                    }
+                                    break;
+                                case 0xbb:
+                                    if (accumulator==e)
+                                    {
+                                        z=1;
+                                    }
+                                    else if (accumulator<e)
+                                    {
+                                        carry=1;
+                                    }
+                                    else
+                                    {
+                                        carry=0;
+                                        z=0;
+                                    }
+                                    break;
+                                case 0xbc:
+                                    if (accumulator==h)
+                                    {
+                                        z=1;
+                                    }
+                                    else if (accumulator<h)
+                                    {
+                                        carry=1;
+                                    }
+                                    else
+                                    {
+                                        carry=0;
+                                        z=0;
+                                    }
+                                    break;
+                                case 0xbd:
+                                    if (accumulator==l)
+                                    {
+                                        z=1;
+                                    }
+                                    else if (accumulator<l)
+                                    {
+                                        carry=1;
+                                    }
+                                    else
+                                    {
+                                        carry=0;
+                                        z=0;
+                                    }
+                                    break;
+                                case 0xbe:
+                                    lsb = Integer.toString(l,16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+l;
+                                    }
+                                    hsb = Integer.toString(h,16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+h;
+                                    }
+                                    m = hsb+lsb;
+                                    if (accumulator==memory.getInt(m))
+                                    {
+                                        z=1;
+                                    }
+                                    else if (accumulator<memory.getInt(m))
+                                    {
+                                        carry=1;
+                                    }
+                                    else
+                                    {
+                                        carry=0;
+                                        z=0;
+                                    }
+                                    break;
+                                case 0x0b:
+                                    eff = Integer.toString(b,2)+Integer.toString(c,2);
+                                    temp = Integer.parseInt(eff,2)-1;
+                                    if (temp==0)
+                                    {
+                                        z=1;
+                                    }
+                                    
                                 default:
                                     Toast.makeText(MainActivity.this,"Under development not all features emulated",Toast.LENGTH_LONG).show();
                             }
@@ -1572,10 +2064,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             carry=0;
             sub=0;
             go=0;
-            reg=-1;
             s=0;
+            add.setText("");
+            data.setText("");
+            nextpoint=false;
             drawer.closeDrawer(navigationView);
-
         }
         return false;
     }
