@@ -169,14 +169,14 @@
         android:layout_marginBottom="27dp"
         android:text="RES" />
 
-    <Button
-        android:id="@+id/c"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignLeft="@+id/n8"
-        android:layout_alignStart="@+id/n8"
-        android:layout_alignTop="@+id/res"
-        android:text="C  SH\nMOV" />
+        <Button
+            android:id="@+id/c"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignLeft="@+id/n8"
+            android:layout_alignStart="@+id/n8"
+            android:layout_alignTop="@+id/res"
+            android:text="C  SH\nMOV" />
 
     <Button
         android:id="@+id/d"

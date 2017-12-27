@@ -15,18 +15,39 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-
 import static android.widget.Toast.LENGTH_SHORT;
 import static java.lang.Math.E;
+
+class Stack
+{
+    int sp=-1;
+    int array[] = new int[8192];
+    public void push(int x,int y)
+    {
+        sp++;
+        array[sp]=x;
+        sp++;
+        array[sp]=y;
+    }
+    public int[] pop()
+    {
+        int x=0,y=0;
+        array[sp]=y;
+        sp--;
+        array[sp]=x;
+        sp--;
+        return new int[]{x,y};
+    }
+}
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     Button a[] = new Button[20];
+    Stack stack = new Stack();
     TextView add,data;
-    int reset,sub,go,accumulator,b,c,d,e,h,l,carry,sp,s=0,z=0,temp;
+    int reset,sub,go,accumulator,b,c,d,e,h,l,carry,s=0,z=0,temp;
     String lsb,hsb,eff,pc,m;
     Bundle memory = new Bundle();
-    ArrayList<Integer> stack = new ArrayList<>();
     private DrawerLayout drawer;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
@@ -67,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         a[0].setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 add.setText("");
                 data.setText("");
                 sub=0;
@@ -1808,7 +1830,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     }
                                     break;
                                 case 0x33:
-                                    sp++;
+                                    stack.sp++;
                                     break;
                                 case 0x01:
                                     lsb = Integer.toString(opcodes.get(i+1),16);
@@ -1866,7 +1888,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     {
                                         hsb="0"+hsb;
                                     }
-                                    sp = Integer.parseInt(hsb,16)+Integer.parseInt(lsb,16);
+                                    stack.sp = Integer.parseInt(hsb,16)+Integer.parseInt(lsb,16);
                                     i+=2;
                                     break;
 //                                case 0xcd:
@@ -2019,14 +2041,313 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         z=0;
                                     }
                                     break;
+//                                case 0x0b:
+//                                    eff = Integer.toString(b,2)+Integer.toString(c,2);
+//                                    temp = Integer.parseInt(eff,2)-1;
+//                                    if (temp==0)
+//                                    {
+//                                        z=1;
+//                                    }
+//                                    b = Integer.parseInt(Integer.toHexString(temp).substring(0,3),16);
+//                                    b = Integer.parseInt(Integer.toHexString(temp).substring(4,),16);
+                                case 0x22:
+                                    lsb = Integer.toString(opcodes.get(i+1),16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(opcodes.get(i+2),16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    eff = hsb+lsb;
+                                    memory.putInt(eff,l);
+                                    i+=2;
+                                    break;
+                                case 0x0a:
+                                    lsb = Integer.toString(c,16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(b,16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    eff = hsb+lsb;
+                                    accumulator=memory.getInt(eff);
+                                    break;
+                                case 0x1a:
+                                    lsb = Integer.toString(e,16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(d,16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    eff = hsb+lsb;
+                                    accumulator=memory.getInt(eff);
+                                    break;
+                                case 0x2a:
+                                    lsb = Integer.toString(opcodes.get(i+1),16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(opcodes.get(i+2),16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    eff = hsb+lsb;
+                                    l=memory.getInt(eff);
+                                    temp = Integer.parseInt(eff,16)+1;
+                                    h=memory.getInt(Integer.toString(temp,16));
+                                    i+=2;
+                                    break;
                                 case 0x0b:
-                                    eff = Integer.toString(b,2)+Integer.toString(c,2);
-                                    temp = Integer.parseInt(eff,2)-1;
-                                    if (temp==0)
+                                    lsb = Integer.toString(c,16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(b,16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    eff = hsb+lsb;
+                                    temp = Integer.parseInt(eff,16)-1;
+                                    s=0;
+                                    if (temp<0)
+                                    {
+                                        temp = -temp;
+                                        s=1;
+                                    }
+                                    b = temp/0x100;
+                                    c = temp%0x100;
+                                    break;
+                                case 0x1b:
+                                    lsb = Integer.toString(e,16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(d,16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    eff = hsb+lsb;
+                                    temp = Integer.parseInt(eff,16)-1;
+                                    s=0;
+                                    if (temp<0)
+                                    {
+                                        temp = -temp;
+                                        s=1;
+                                    }
+                                    d = temp/0x100;
+                                    e = temp%0x100;
+                                    break;
+                                case 0x2b:
+                                    lsb = Integer.toString(l,16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(h,16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    eff = hsb+lsb;
+                                    temp = Integer.parseInt(eff,16)-1;
+                                    s=0;
+                                    if (temp<0)
+                                    {
+                                        temp = -temp;
+                                        s=1;
+                                    }
+                                    h = temp/0x100;
+                                    l = temp%0x100;
+                                    break;
+                                case 0x3b:
+                                    stack.sp--;
+                                    break;
+                                case 0xc5:
+                                    stack.push(b,c);
+                                    break;
+                                case 0xd5:
+                                    stack.push(d,e);
+                                    break;
+                                case 0xe5:
+                                    stack.push(h,l);
+                                    break;
+                                case 0xc1:
+                                    int a1[] = stack.pop();
+                                    b=a1[0];
+                                    c=a1[1];
+                                    break;
+                                case 0xd1:
+                                    a1 = stack.pop();
+                                    d=a1[0];
+                                    e=a1[1];
+                                    break;
+                                case 0xe1:
+                                    a1 = stack.pop();
+                                    h=a1[0];
+                                    l=a1[1];
+                                    break;
+                                case 0xcd:
+                                    lsb = Integer.toString(opcodes.get(i+1),16);
+                                    if (lsb.length()==1)
+                                    {
+                                        lsb="0"+lsb;
+                                    }
+                                    hsb = Integer.toString(opcodes.get(i+2),16);
+                                    if (hsb.length()==1)
+                                    {
+                                        hsb="0"+hsb;
+                                    }
+                                    eff = hsb+lsb;
+                                    stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
+                                    i = Integer.parseInt(eff,16)-1;
+                                    break;
+                                case 0xdc:
+                                    if (carry==1)
+                                    {
+                                        lsb = Integer.toString(opcodes.get(i+1),16);
+                                        if (lsb.length()==1)
+                                        {
+                                            lsb="0"+lsb;
+                                        }
+                                        hsb = Integer.toString(opcodes.get(i+2),16);
+                                        if (hsb.length()==1)
+                                        {
+                                            hsb="0"+hsb;
+                                        }
+                                        eff = hsb+lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
+                                        i = Integer.parseInt(eff,16)-1;
+                                    }
+                                    break;
+                                case 0xfc:
+                                    if (s==1)
+                                    {
+                                        lsb = Integer.toString(opcodes.get(i+1),16);
+                                        if (lsb.length()==1)
+                                        {
+                                            lsb="0"+lsb;
+                                        }
+                                        hsb = Integer.toString(opcodes.get(i+2),16);
+                                        if (hsb.length()==1)
+                                        {
+                                            hsb="0"+hsb;
+                                        }
+                                        eff = hsb+lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
+                                        i = Integer.parseInt(eff,16)-1;
+                                    }
+                                    break;
+                                case 0xd4:
+                                    if (carry==0)
+                                    {
+                                        lsb = Integer.toString(opcodes.get(i+1),16);
+                                        if (lsb.length()==1)
+                                        {
+                                            lsb="0"+lsb;
+                                        }
+                                        hsb = Integer.toString(opcodes.get(i+2),16);
+                                        if (hsb.length()==1)
+                                        {
+                                            hsb="0"+hsb;
+                                        }
+                                        eff = hsb+lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
+                                        i = Integer.parseInt(eff,16)-1;
+                                    }
+                                    break;
+                                case 0xc4:
+                                    if (z==0)
+                                    {
+                                        lsb = Integer.toString(opcodes.get(i+1),16);
+                                        if (lsb.length()==1)
+                                        {
+                                            lsb="0"+lsb;
+                                        }
+                                        hsb = Integer.toString(opcodes.get(i+2),16);
+                                        if (hsb.length()==1)
+                                        {
+                                            hsb="0"+hsb;
+                                        }
+                                        eff = hsb+lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
+                                        i = Integer.parseInt(eff,16)-1;
+                                    }
+                                    break;
+                                case 0xf4:
+                                    if (s==0)
+                                    {
+                                        lsb = Integer.toString(opcodes.get(i+1),16);
+                                        if (lsb.length()==1)
+                                        {
+                                            lsb="0"+lsb;
+                                        }
+                                        hsb = Integer.toString(opcodes.get(i+2),16);
+                                        if (hsb.length()==1)
+                                        {
+                                            hsb="0"+hsb;
+                                        }
+                                        eff = hsb+lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
+                                        i = Integer.parseInt(eff,16)-1;
+                                    }
+                                    break;
+                                case 0xfe:
+                                    temp = opcodes.get(i+1);
+                                    if (accumulator==temp)
                                     {
                                         z=1;
                                     }
-                                    
+                                    else if (accumulator<temp)
+                                    {
+                                        carry=1;
+                                    }
+                                    else
+                                    {
+                                        carry=0;
+                                        z=0;
+                                    }
+                                    break;
+                                case 0xcc:
+                                    if (z==1)
+                                    {
+                                        lsb = Integer.toString(opcodes.get(i+1),16);
+                                        if (lsb.length()==1)
+                                        {
+                                            lsb="0"+lsb;
+                                        }
+                                        hsb = Integer.toString(opcodes.get(i+2),16);
+                                        if (hsb.length()==1)
+                                        {
+                                            hsb="0"+hsb;
+                                        }
+                                        eff = hsb+lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
+                                        i = Integer.parseInt(eff,16)-1;
+                                    }
+                                    break;
+                                case 0x17:
+
+                                case 0xc9:
+                                    a1 = stack.pop();
+                                    i=Integer.parseInt(Integer.toHexString(a1[0])+Integer.toHexString(a1[1]),16)-1;
+                                    break;
                                 default:
                                     Toast.makeText(MainActivity.this,"Under development not all features emulated",Toast.LENGTH_LONG).show();
                             }
@@ -2068,6 +2389,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             add.setText("");
             data.setText("");
             nextpoint=false;
+            drawer.closeDrawer(navigationView);
+        }
+        if (id == R.id.hl)
+        {
+            Toast.makeText(MainActivity.this,"Refer Internet",Toast.LENGTH_LONG).show();
             drawer.closeDrawer(navigationView);
         }
         return false;
