@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,17 +46,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Button a[] = new Button[20];
     Stack stack = new Stack();
     TextView add,data;
-    int reset,sub,go,accumulator,b,c,d,e,h,l,carry,s=0,z=0,temp;
+    int sub,go,accumulator,b,c,d,e,h,l,carry,s=0,z=0,temp,ac,p;
     String lsb,hsb,eff,pc,m;
     Bundle memory = new Bundle();
     private DrawerLayout drawer;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     boolean nextpoint=false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         drawer = (DrawerLayout)findViewById(R.id.drawable);
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this,drawer,R.string.open,R.string.close);
@@ -563,579 +564,523 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     else
                     {
                         for(int i=0;opcodes.get(i)!=0x76;i++)
-                        {
-                            switch (opcodes.get(i))
-                            {
+                            switch (opcodes.get(i)) {
                                 case 0x3a:
-                                    lsb = Integer.toString(opcodes.get(i+1),16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(opcodes.get(i+2),16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
+                                    eff = hsb + lsb;
                                     accumulator = memory.getInt(eff);
-                                    i+=2;
+                                    i += 2;
                                     break;
                                 case 0x78:
                                     accumulator = b;
                                     break;
                                 case 0x79:
-                                    accumulator=c;
+                                    accumulator = c;
                                     break;
                                 case 0x7a:
-                                    accumulator=d;
+                                    accumulator = d;
                                     break;
                                 case 0x7b:
-                                    accumulator=e;
+                                    accumulator = e;
                                     break;
                                 case 0x7c:
-                                    accumulator=h;
+                                    accumulator = h;
                                     break;
                                 case 0x7d:
-                                    accumulator=l;
+                                    accumulator = l;
                                     break;
                                 case 0x7e:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    accumulator=memory.getInt(m);
+                                    m = hsb + lsb;
+                                    accumulator = memory.getInt(m);
                                     break;
                                 case 0x47:
-                                    b=accumulator;
+                                    b = accumulator;
                                     break;
                                 case 0x40:
-                                    b=b;
+                                    b = b;
                                     break;
                                 case 0x41:
-                                    b=c;
+                                    b = c;
                                     break;
                                 case 0x42:
-                                    b=d;
+                                    b = d;
                                     break;
                                 case 0x43:
-                                    b=e;
+                                    b = e;
                                     break;
                                 case 0x44:
-                                    b=h;
+                                    b = h;
                                     break;
                                 case 0x45:
-                                    b=l;
+                                    b = l;
                                     break;
                                 case 0x46:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    b=memory.getInt(m);
+                                    m = hsb + lsb;
+                                    b = memory.getInt(m);
                                     break;
                                 case 0x4f:
-                                    c=accumulator;
+                                    c = accumulator;
                                     break;
                                 case 0x48:
-                                    c=b;
+                                    c = b;
                                     break;
                                 case 0x49:
-                                    c=c;
+                                    c = c;
                                     break;
                                 case 0x4a:
-                                    c=d;
+                                    c = d;
                                     break;
                                 case 0x4b:
-                                    c=e;
+                                    c = e;
                                     break;
                                 case 0x4c:
-                                    c=h;
+                                    c = h;
                                     break;
                                 case 0x4d:
-                                    c=l;
+                                    c = l;
                                     break;
                                 case 0x4e:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    c=memory.getInt(m);
+                                    m = hsb + lsb;
+                                    c = memory.getInt(m);
                                     break;
                                 case 0x57:
-                                    d=accumulator;
+                                    d = accumulator;
                                     break;
                                 case 0x50:
-                                    d=b;
+                                    d = b;
                                     break;
                                 case 0x51:
-                                    d=c;
+                                    d = c;
                                     break;
                                 case 0x52:
-                                    d=d;
+                                    d = d;
                                     break;
                                 case 0x53:
-                                    d=e;
+                                    d = e;
                                     break;
                                 case 0x54:
-                                    d=h;
+                                    d = h;
                                     break;
                                 case 0x55:
-                                    d=l;
+                                    d = l;
                                     break;
                                 case 0x56:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    d=memory.getInt(m);
+                                    m = hsb + lsb;
+                                    d = memory.getInt(m);
                                     break;
                                 case 0x5f:
-                                    e=accumulator;
+                                    e = accumulator;
                                     break;
                                 case 0x58:
-                                    e=b;
+                                    e = b;
                                     break;
                                 case 0x59:
-                                    e=c;
+                                    e = c;
                                     break;
                                 case 0x5a:
-                                    e=d;
+                                    e = d;
                                     break;
                                 case 0x5b:
-                                    e=e;
+                                    e = e;
                                     break;
                                 case 0x5c:
-                                    e=h;
+                                    e = h;
                                     break;
                                 case 0x5d:
-                                    e=l;
+                                    e = l;
                                     break;
                                 case 0x5e:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    e=memory.getInt(m);
+                                    m = hsb + lsb;
+                                    e = memory.getInt(m);
                                     break;
                                 case 0x67:
-                                    h=accumulator;
+                                    h = accumulator;
                                     break;
                                 case 0x60:
-                                    h=b;
+                                    h = b;
                                     break;
                                 case 0x61:
-                                    h=c;
+                                    h = c;
                                     break;
                                 case 0x62:
-                                    h=d;
+                                    h = d;
                                     break;
                                 case 0x63:
-                                    h=e;
+                                    h = e;
                                     break;
                                 case 0x64:
-                                    h=h;
+                                    h = h;
                                     break;
                                 case 0x65:
-                                    h=l;
+                                    h = l;
                                     break;
                                 case 0x66:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    h=memory.getInt(m);
+                                    m = hsb + lsb;
+                                    h = memory.getInt(m);
                                     break;
                                 case 0x6f:
-                                    l=accumulator;
+                                    l = accumulator;
                                     break;
                                 case 0x68:
-                                    l=b;
+                                    l = b;
                                     break;
                                 case 0x69:
-                                    l=c;
+                                    l = c;
                                     break;
                                 case 0x6a:
-                                    l=d;
+                                    l = d;
                                     break;
                                 case 0x6b:
-                                    l=e;
+                                    l = e;
                                     break;
                                 case 0x6c:
-                                    l=h;
+                                    l = h;
                                     break;
                                 case 0x6d:
-                                    l=l;
+                                    l = l;
                                     break;
                                 case 0x6e:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    l=memory.getInt(m);
+                                    m = hsb + lsb;
+                                    l = memory.getInt(m);
                                     break;
                                 case 0x77:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    memory.putInt(m,accumulator);
+                                    m = hsb + lsb;
+                                    memory.putInt(m, accumulator);
                                     break;
                                 case 0x70:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    memory.putInt(m,b);
+                                    m = hsb + lsb;
+                                    memory.putInt(m, b);
                                     break;
                                 case 0x71:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    memory.putInt(m,c);
+                                    m = hsb + lsb;
+                                    memory.putInt(m, c);
                                     break;
                                 case 0x72:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    memory.putInt(m,d);
+                                    m = hsb + lsb;
+                                    memory.putInt(m, d);
                                     break;
                                 case 0x73:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    memory.putInt(m,e);
+                                    m = hsb + lsb;
+                                    memory.putInt(m, e);
                                     break;
                                 case 0x74:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    memory.putInt(m,h);
+                                    m = hsb + lsb;
+                                    memory.putInt(m, h);
                                     break;
                                 case 0x75:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    memory.putInt(m,l);
+                                    m = hsb + lsb;
+                                    memory.putInt(m, l);
                                     break;
                                 case 0x3e:
-                                    accumulator=opcodes.get(i+1);
+                                    accumulator = opcodes.get(i + 1);
                                     i++;
                                     break;
                                 case 0x06:
-                                    b=opcodes.get(i+1);
+                                    b = opcodes.get(i + 1);
                                     i++;
                                     break;
                                 case 0x0e:
-                                    c=opcodes.get(i+1);
+                                    c = opcodes.get(i + 1);
                                     i++;
                                     break;
                                 case 0x16:
-                                    d=opcodes.get(i+1);
+                                    d = opcodes.get(i + 1);
                                     i++;
                                     break;
                                 case 0x1e:
-                                    e=opcodes.get(i+1);
+                                    e = opcodes.get(i + 1);
                                     i++;
                                     break;
                                 case 0x26:
-                                    h=opcodes.get(i+1);
+                                    h = opcodes.get(i + 1);
                                     i++;
                                     break;
                                 case 0x2e:
-                                    l=opcodes.get(i+1);
+                                    l = opcodes.get(i + 1);
                                     i++;
                                     break;
                                 case 0x36:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    memory.putInt(m,opcodes.get(i+1));
+                                    m = hsb + lsb;
+                                    memory.putInt(m, opcodes.get(i + 1));
                                     i++;
                                     break;
                                 case 0x32:
-                                    lsb = Integer.toString(opcodes.get(i+1),16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(opcodes.get(i+2),16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
-                                    memory.putInt(eff,accumulator);
-                                    i+=2;
+                                    eff = hsb + lsb;
+                                    memory.putInt(eff, accumulator);
+                                    i += 2;
                                     break;
                                 case 0x87:
-                                    accumulator+=accumulator;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += accumulator;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x80:
-                                    accumulator+=b;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += b;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x81:
-                                    accumulator+=c;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += c;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x82:
-                                    accumulator+=d;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += d;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x83:
-                                    accumulator+=e;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += e;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x84:
-                                    accumulator+=h;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += h;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x85:
-                                    accumulator+=l;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += l;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x86:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    accumulator+=memory.getInt(m);
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    m = hsb + lsb;
+                                    accumulator += memory.getInt(m);
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x3d:
                                     accumulator--;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0x05:
                                     b--;
-                                    z=0;
-                                    if (b==0)
-                                    {
-                                        z=1;
+                                    z = 0;
+                                    if (b == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0x0d:
                                     c--;
-                                    z=0;
-                                    if (c==0)
-                                    {
-                                        z=1;
+                                    z = 0;
+                                    if (c == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0x15:
                                     d--;
-                                    z=0;
-                                    if (d==0)
-                                    {
-                                        z=1;
+                                    z = 0;
+                                    if (d == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0x1d:
                                     e--;
-                                    z=0;
-                                    if (e==0)
-                                    {
-                                        z=1;
+                                    z = 0;
+                                    if (e == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0x25:
                                     h--;
-                                    z=0;
-                                    if (h==0)
-                                    {
-                                        z=1;
+                                    z = 0;
+                                    if (h == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0x2d:
                                     l--;
-                                    z=0;
-                                    if (l==0)
-                                    {
-                                        z=1;
+                                    z = 0;
+                                    if (l == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0x35:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    z=0;
-                                    if (memory.getInt(m)-1==0)
-                                    {
-                                        z=1;
+                                    m = hsb + lsb;
+                                    z = 0;
+                                    if (memory.getInt(m) - 1 == 0) {
+                                        z = 1;
                                     }
-                                    memory.putInt(m,memory.getInt(m)-1);
+                                    memory.putInt(m, memory.getInt(m) - 1);
                                     break;
                                 case 0x3c:
                                     accumulator++;
@@ -1159,202 +1104,170 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     l++;
                                     break;
                                 case 0x34:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    memory.putInt(m,memory.getInt(m)+1);
+                                    m = hsb + lsb;
+                                    memory.putInt(m, memory.getInt(m) + 1);
                                     break;
                                 case 0x97:
-                                    accumulator-=accumulator;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator -= accumulator;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
-                                    s=0;
-                                    if (accumulator<0)
-                                    {
-                                        s=1;
+                                    s = 0;
+                                    if (accumulator < 0) {
+                                        s = 1;
                                         accumulator = -accumulator;
                                     }
                                     break;
                                 case 0x90:
-                                    accumulator-=b;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator -= b;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
-                                    s=0;
-                                    if (accumulator<0)
-                                    {
-                                        s=1;
+                                    s = 0;
+                                    if (accumulator < 0) {
+                                        s = 1;
                                         accumulator = -accumulator;
                                     }
                                     break;
                                 case 0x91:
-                                    accumulator-=c;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator -= c;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
-                                    s=0;
-                                    if (accumulator<0)
-                                    {
-                                        s=1;
+                                    s = 0;
+                                    if (accumulator < 0) {
+                                        s = 1;
                                         accumulator = -accumulator;
                                     }
                                     break;
                                 case 0x92:
-                                    accumulator-=d;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator -= d;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
-                                    s=0;
-                                    if (accumulator<0)
-                                    {
-                                        s=1;
+                                    s = 0;
+                                    if (accumulator < 0) {
+                                        s = 1;
                                         accumulator = -accumulator;
                                     }
                                     break;
                                 case 0x93:
-                                    accumulator-=e;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator -= e;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
-                                    s=0;
-                                    if (accumulator<0)
-                                    {
-                                        s=1;
+                                    s = 0;
+                                    if (accumulator < 0) {
+                                        s = 1;
                                         accumulator = -accumulator;
                                     }
                                     break;
                                 case 0x94:
-                                    accumulator-=h;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator -= h;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
-                                    s=0;
-                                    if (accumulator<0)
-                                    {
-                                        s=1;
+                                    s = 0;
+                                    if (accumulator < 0) {
+                                        s = 1;
                                         accumulator = -accumulator;
                                     }
                                     break;
                                 case 0x95:
-                                    accumulator-=l;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator -= l;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
-                                    s=0;
-                                    if (accumulator<0)
-                                    {
-                                        s=1;
+                                    s = 0;
+                                    if (accumulator < 0) {
+                                        s = 1;
                                         accumulator = -accumulator;
                                     }
                                     break;
                                 case 0x96:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    accumulator-=memory.getInt(m);
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    m = hsb + lsb;
+                                    accumulator -= memory.getInt(m);
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
-                                    s=0;
-                                    if (accumulator<0)
-                                    {
-                                        s=1;
+                                    s = 0;
+                                    if (accumulator < 0) {
+                                        s = 1;
                                         accumulator = -accumulator;
                                     }
                                     break;
                                 case 0xd6:
-                                    accumulator-=opcodes.get(i+1);
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator -= opcodes.get(i + 1);
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
-                                    s=0;
-                                    if (accumulator<0)
-                                    {
-                                        accumulator=-accumulator;
-                                        s=1;
+                                    s = 0;
+                                    if (accumulator < 0) {
+                                        accumulator = -accumulator;
+                                        s = 1;
                                     }
                                     i++;
                                     break;
                                 case 0x76:
                                     break;
                                 case 0xc2:
-                                    if (z==0)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (z == 0) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
-                                        Log.d("AAA","mul:"+accumulator+" b:"+b);
-                                    }
-                                    else
-                                    {
-                                        i+=2;
-                                        z=0;
+                                        eff = hsb + lsb;
+                                        i = (Integer.parseInt(Integer.toHexString(Integer.parseInt(eff, 16) % 10), 10)) - 1;
+                                        Log.d("AAA", "mul:" + accumulator + " b:" + b);
+                                    } else {
+                                        i += 2;
+                                        z = 0;
                                     }
                                     break;
                                 case 0xca:
-                                    if (z==1)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (z == 1) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
-                                        Log.d("AAA","mul:"+accumulator+" b:"+b);
-                                    }
-                                    else
-                                    {
-                                        i+=2;
-                                        z=0;
+                                        eff = hsb + lsb;
+                                        i = (Integer.parseInt(Integer.toHexString(Integer.parseInt(eff, 16) % 10), 10)) - 1;
+                                        Log.d("AAA", "mul:" + accumulator + " b:" + b);
+                                    } else {
+                                        i += 2;
+                                        z = 0;
                                     }
                                     break;
                                 case 0x00:
@@ -1363,469 +1276,404 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     accumulator = accumulator;
                                     break;
                                 case 0xb0:
-                                    accumulator = accumulator|b;
+                                    accumulator = accumulator | b;
                                     break;
                                 case 0xb1:
-                                    accumulator = accumulator|c;
+                                    accumulator = accumulator | c;
                                     break;
                                 case 0xb2:
-                                    accumulator = accumulator|d;
+                                    accumulator = accumulator | d;
                                     break;
                                 case 0xb3:
-                                    accumulator = accumulator|e;
+                                    accumulator = accumulator | e;
                                     break;
                                 case 0xb4:
-                                    accumulator = accumulator|h;
+                                    accumulator = accumulator | h;
                                     break;
                                 case 0xb5:
-                                    accumulator = accumulator|l;
+                                    accumulator = accumulator | l;
                                     break;
                                 case 0xb6:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    accumulator = accumulator|memory.getInt(eff);
+                                    m = hsb + lsb;
+                                    accumulator = accumulator | memory.getInt(eff);
                                     break;
                                 case 0xf6:
-                                    accumulator = accumulator | opcodes.get(i+1);
-                                    i+=1;
+                                    accumulator = accumulator | opcodes.get(i + 1);
+                                    i += 1;
                                     break;
                                 case 0xa7:
                                     accumulator = accumulator;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xa0:
-                                    accumulator = accumulator&b;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator & b;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xa1:
-                                    accumulator = accumulator&c;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator & c;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xa2:
-                                    accumulator = accumulator&d;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator & d;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xa3:
-                                    accumulator = accumulator&e;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator & e;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xa4:
-                                    accumulator = accumulator&h;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator & h;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xa5:
-                                    accumulator = accumulator&l;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator & l;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xa6:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    accumulator = accumulator&memory.getInt(eff);
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    m = hsb + lsb;
+                                    accumulator = accumulator & memory.getInt(eff);
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xe6:
-                                    accumulator = accumulator & opcodes.get(i+1);
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator & opcodes.get(i + 1);
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
-                                    i+=1;
+                                    i += 1;
                                     break;
                                 case 0xaf:
                                     accumulator = 0;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xa8:
-                                    accumulator = accumulator^b;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator ^ b;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xa9:
-                                    accumulator = accumulator^c;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator ^ c;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xaa:
-                                    accumulator = accumulator^d;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator ^ d;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xab:
-                                    accumulator = accumulator^e;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator ^ e;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xac:
-                                    accumulator = accumulator^h;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator ^ h;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xad:
-                                    accumulator = accumulator^l;
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator ^ l;
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xae:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    accumulator = accumulator^memory.getInt(eff);
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    m = hsb + lsb;
+                                    accumulator = accumulator ^ memory.getInt(eff);
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
                                     break;
                                 case 0xee:
-                                    accumulator = accumulator ^ opcodes.get(i+1);
-                                    z=0;
-                                    if (accumulator==0)
-                                    {
-                                        z=1;
+                                    accumulator = accumulator ^ opcodes.get(i + 1);
+                                    z = 0;
+                                    if (accumulator == 0) {
+                                        z = 1;
                                     }
-                                    i+=1;
+                                    i += 1;
                                     break;
                                 case 0xd3:
-                                    lsb = Integer.toString(opcodes.get(i+1),16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(opcodes.get(i+2),16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
-                                    memory.putInt(eff,accumulator);
-                                    i+=2;
+                                    eff = hsb + lsb;
+                                    memory.putInt(eff, accumulator);
+                                    i += 2;
                                     break;
                                 case 0xe9:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    eff = hsb+lsb;
+                                    eff = hsb + lsb;
                                     pc = eff;
                                     break;
                                 case 0xce:
-                                    accumulator+=opcodes.get(i+1)+carry;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += opcodes.get(i + 1) + carry;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     i++;
                                     break;
                                 case 0xc6:
-                                    accumulator+=opcodes.get(i+1);
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += opcodes.get(i + 1);
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     i++;
                                     break;
                                 case 0x8f:
-                                    accumulator+=accumulator+carry;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += accumulator + carry;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x88:
-                                    accumulator+=b+carry;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += b + carry;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x89:
-                                    accumulator+=c+carry;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += c + carry;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x8a:
-                                    accumulator+=d+carry;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += d + carry;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x8b:
-                                    accumulator+=e+carry;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += e + carry;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x8c:
-                                    accumulator+=h+carry;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += h + carry;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x8d:
-                                    accumulator+=l+carry;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    accumulator += l + carry;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0x8e:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    accumulator+=memory.getInt(m)+carry;
-                                    carry=0;
-                                    if (Integer.toHexString(accumulator).length()==3)
-                                    {
-                                        accumulator-=0x100;
-                                        carry=1;
+                                    m = hsb + lsb;
+                                    accumulator += memory.getInt(m) + carry;
+                                    carry = 0;
+                                    if (Integer.toHexString(accumulator).length() == 3) {
+                                        accumulator -= 0x100;
+                                        carry = 1;
                                     }
                                     break;
                                 case 0xda:
-                                    if (carry==1)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (carry == 1) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
-                                        Log.d("AAA","mul:"+accumulator+" b:"+b);
-                                    }
-                                    else
-                                    {
-                                        i+=2;
-                                        carry=0;
+                                        eff = hsb + lsb;
+                                        i = (Integer.parseInt(Integer.toHexString(Integer.parseInt(eff, 16) % 10), 10)) - 1;
+                                        Log.d("AAA", "mul:" + accumulator + " b:" + b);
+                                    } else {
+                                        i += 2;
+                                        carry = 0;
                                     }
                                     break;
                                 case 0xd2:
-                                    if (carry==0)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (carry == 0) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
-                                        Log.d("AAA","mul:"+accumulator+" b:"+b);
-                                    }
-                                    else
-                                    {
-                                        i+=2;
-                                        carry=0;
+                                        eff = hsb + lsb;
+                                        i = (Integer.parseInt(Integer.toHexString(Integer.parseInt(eff, 16) % 10), 10)) - 1;
+                                        Log.d("AAA", "mul:" + accumulator + " b:" + b);
+                                    } else {
+                                        i += 2;
+                                        carry = 0;
                                     }
                                     break;
                                 case 0xfa:
-                                    if (s==1)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (s == 1) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
-                                        Log.d("AAA","mul:"+accumulator+" b:"+b);
-                                    }
-                                    else
-                                    {
-                                        i+=2;
-                                        s=0;
+                                        eff = hsb + lsb;
+                                        i = (Integer.parseInt(Integer.toHexString(Integer.parseInt(eff, 16) % 10), 10)) - 1;
+                                        Log.d("AAA", "mul:" + accumulator + " b:" + b);
+                                    } else {
+                                        i += 2;
+                                        s = 0;
                                     }
                                     break;
                                 case 0xf2:
-                                    if (s==0)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (s == 0) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
-                                        Log.d("AAA","mul:"+accumulator+" b:"+b);
-                                    }
-                                    else
-                                    {
-                                        i+=2;
-                                        s=0;
+                                        eff = hsb + lsb;
+                                        i = (Integer.parseInt(Integer.toHexString(Integer.parseInt(eff, 16) % 10), 10)) - 1;
+                                        Log.d("AAA", "mul:" + accumulator + " b:" + b);
+                                    } else {
+                                        i += 2;
+                                        s = 0;
                                     }
                                     break;
                                 case 0xc3:
-                                    lsb = Integer.toString(opcodes.get(i+1),16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(opcodes.get(i+2),16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
-                                    i=(Integer.parseInt(Integer.toHexString(Integer.parseInt(eff,16)%10),10))-1;
-                                    i+=2;
+                                    eff = hsb + lsb;
+                                    i = (Integer.parseInt(Integer.toHexString(Integer.parseInt(eff, 16) % 10), 10)) - 1;
+                                    i += 2;
                                     break;
                                 case 0x03:
                                     c++;
-                                    if (Integer.toString(c,16).length()==3)
-                                    {
-                                        c-=0x100;
+                                    if (Integer.toString(c, 16).length() == 3) {
+                                        c -= 0x100;
                                         b++;
                                     }
                                     break;
                                 case 0x13:
                                     e++;
-                                    if (Integer.toString(e,16).length()==3)
-                                    {
-                                        e-=0x100;
+                                    if (Integer.toString(e, 16).length() == 3) {
+                                        e -= 0x100;
                                         d++;
                                     }
                                     break;
                                 case 0x23:
                                     l++;
-                                    if (Integer.toString(l,16).length()==3)
-                                    {
-                                        l-=0x100;
+                                    if (Integer.toString(l, 16).length() == 3) {
+                                        l -= 0x100;
                                         h++;
                                     }
                                     break;
@@ -1833,63 +1681,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     stack.sp++;
                                     break;
                                 case 0x01:
-                                    lsb = Integer.toString(opcodes.get(i+1),16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(opcodes.get(i+2),16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    b=Integer.parseInt(hsb,16);
-                                    c=Integer.parseInt(lsb,16);
-                                    i+=2;
+                                    b = Integer.parseInt(hsb, 16);
+                                    c = Integer.parseInt(lsb, 16);
+                                    i += 2;
                                     break;
                                 case 0x11:
-                                    lsb = Integer.toString(opcodes.get(i+1),16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(opcodes.get(i+2),16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    d=Integer.parseInt(hsb,16);
-                                    e=Integer.parseInt(lsb,16);
-                                    i+=2;
+                                    d = Integer.parseInt(hsb, 16);
+                                    e = Integer.parseInt(lsb, 16);
+                                    i += 2;
                                     break;
                                 case 0x21:
-                                    lsb = Integer.toString(opcodes.get(i+1),16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(opcodes.get(i+2),16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    h=Integer.parseInt(hsb,16);
-                                    l=Integer.parseInt(lsb,16);
-                                    i+=2;
+                                    h = Integer.parseInt(hsb, 16);
+                                    l = Integer.parseInt(lsb, 16);
+                                    i += 2;
                                     break;
                                 case 0x31:
-                                    lsb = Integer.toString(opcodes.get(i+1),16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(opcodes.get(i+2),16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    stack.sp = Integer.parseInt(hsb,16)+Integer.parseInt(lsb,16);
-                                    i+=2;
+                                    stack.sp = Integer.parseInt(hsb, 16) + Integer.parseInt(lsb, 16);
+                                    i += 2;
                                     break;
 //                                case 0xcd:
 //                                    lsb = Integer.toString(opcodes.get(i+1),16);
@@ -1911,447 +1751,606 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     carry = ~carry;
                                     break;
                                 case 0xbf:
-                                    if (accumulator==accumulator)
-                                    {
-                                        z=1;
-                                    }
-                                    else if (accumulator<accumulator)
-                                    {
-                                        carry=1;
-                                    }
-                                    else
-                                    {
-                                        carry=0;
-                                        z=0;
+                                    if (accumulator == accumulator) {
+                                        z = 1;
+                                    } else if (accumulator < accumulator) {
+                                        carry = 1;
+                                    } else {
+                                        carry = 0;
+                                        z = 0;
                                     }
                                     break;
                                 case 0xb8:
-                                    if (accumulator==b)
-                                    {
-                                        z=1;
-                                    }
-                                    else if (accumulator<b)
-                                    {
-                                        carry=1;
-                                    }
-                                    else
-                                    {
-                                        carry=0;
-                                        z=0;
+                                    if (accumulator == b) {
+                                        z = 1;
+                                    } else if (accumulator < b) {
+                                        carry = 1;
+                                    } else {
+                                        carry = 0;
+                                        z = 0;
                                     }
                                     break;
                                 case 0xb9:
-                                    if (accumulator==c)
-                                    {
-                                        z=1;
-                                    }
-                                    else if (accumulator<c)
-                                    {
-                                        carry=1;
-                                    }
-                                    else
-                                    {
-                                        carry=0;
-                                        z=0;
+                                    if (accumulator == c) {
+                                        z = 1;
+                                    } else if (accumulator < c) {
+                                        carry = 1;
+                                    } else {
+                                        carry = 0;
+                                        z = 0;
                                     }
                                     break;
                                 case 0xba:
-                                    if (accumulator==d)
-                                    {
-                                        z=1;
-                                    }
-                                    else if (accumulator<d)
-                                    {
-                                        carry=1;
-                                    }
-                                    else
-                                    {
-                                        carry=0;
-                                        z=0;
+                                    if (accumulator == d) {
+                                        z = 1;
+                                    } else if (accumulator < d) {
+                                        carry = 1;
+                                    } else {
+                                        carry = 0;
+                                        z = 0;
                                     }
                                     break;
                                 case 0xbb:
-                                    if (accumulator==e)
-                                    {
-                                        z=1;
-                                    }
-                                    else if (accumulator<e)
-                                    {
-                                        carry=1;
-                                    }
-                                    else
-                                    {
-                                        carry=0;
-                                        z=0;
+                                    if (accumulator == e) {
+                                        z = 1;
+                                    } else if (accumulator < e) {
+                                        carry = 1;
+                                    } else {
+                                        carry = 0;
+                                        z = 0;
                                     }
                                     break;
                                 case 0xbc:
-                                    if (accumulator==h)
-                                    {
-                                        z=1;
-                                    }
-                                    else if (accumulator<h)
-                                    {
-                                        carry=1;
-                                    }
-                                    else
-                                    {
-                                        carry=0;
-                                        z=0;
+                                    if (accumulator == h) {
+                                        z = 1;
+                                    } else if (accumulator < h) {
+                                        carry = 1;
+                                    } else {
+                                        carry = 0;
+                                        z = 0;
                                     }
                                     break;
                                 case 0xbd:
-                                    if (accumulator==l)
-                                    {
-                                        z=1;
-                                    }
-                                    else if (accumulator<l)
-                                    {
-                                        carry=1;
-                                    }
-                                    else
-                                    {
-                                        carry=0;
-                                        z=0;
+                                    if (accumulator == l) {
+                                        z = 1;
+                                    } else if (accumulator < l) {
+                                        carry = 1;
+                                    } else {
+                                        carry = 0;
+                                        z = 0;
                                     }
                                     break;
                                 case 0xbe:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+l;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+h;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
                                     }
-                                    m = hsb+lsb;
-                                    if (accumulator==memory.getInt(m))
-                                    {
-                                        z=1;
-                                    }
-                                    else if (accumulator<memory.getInt(m))
-                                    {
-                                        carry=1;
-                                    }
-                                    else
-                                    {
-                                        carry=0;
-                                        z=0;
+                                    m = hsb + lsb;
+                                    if (accumulator == memory.getInt(m)) {
+                                        z = 1;
+                                    } else if (accumulator < memory.getInt(m)) {
+                                        carry = 1;
+                                    } else {
+                                        carry = 0;
+                                        z = 0;
                                     }
                                     break;
-//                                case 0x0b:
-//                                    eff = Integer.toString(b,2)+Integer.toString(c,2);
-//                                    temp = Integer.parseInt(eff,2)-1;
-//                                    if (temp==0)
-//                                    {
-//                                        z=1;
-//                                    }
-//                                    b = Integer.parseInt(Integer.toHexString(temp).substring(0,3),16);
-//                                    b = Integer.parseInt(Integer.toHexString(temp).substring(4,),16);
                                 case 0x22:
-                                    lsb = Integer.toString(opcodes.get(i+1),16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(opcodes.get(i+2),16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
-                                    memory.putInt(eff,l);
-                                    i+=2;
+                                    eff = hsb + lsb;
+                                    memory.putInt(eff, l);
+                                    memory.putInt(Integer.toString(Integer.parseInt(eff,16)+1,16),h);
+                                    i += 2;
                                     break;
                                 case 0x0a:
-                                    lsb = Integer.toString(c,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(c, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(b,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(b, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
-                                    accumulator=memory.getInt(eff);
+                                    eff = hsb + lsb;
+                                    accumulator = memory.getInt(eff);
                                     break;
                                 case 0x1a:
-                                    lsb = Integer.toString(e,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(e, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(d,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(d, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
-                                    accumulator=memory.getInt(eff);
+                                    eff = hsb + lsb;
+                                    accumulator = memory.getInt(eff);
                                     break;
                                 case 0x2a:
-                                    lsb = Integer.toString(opcodes.get(i+1),16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(opcodes.get(i+2),16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
-                                    l=memory.getInt(eff);
-                                    temp = Integer.parseInt(eff,16)+1;
-                                    h=memory.getInt(Integer.toString(temp,16));
-                                    i+=2;
+                                    eff = hsb + lsb;
+                                    l = memory.getInt(eff);
+                                    temp = Integer.parseInt(eff, 16) + 1;
+                                    h = memory.getInt(Integer.toString(temp, 16));
+                                    i += 2;
                                     break;
                                 case 0x0b:
-                                    lsb = Integer.toString(c,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(c, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(b,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(b, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
-                                    temp = Integer.parseInt(eff,16)-1;
-                                    s=0;
-                                    if (temp<0)
-                                    {
+                                    eff = hsb + lsb;
+                                    temp = Integer.parseInt(eff, 16) - 1;
+                                    s = 0;
+                                    if (temp < 0) {
                                         temp = -temp;
-                                        s=1;
+                                        s = 1;
                                     }
-                                    b = temp/0x100;
-                                    c = temp%0x100;
+                                    b = temp / 0x100;
+                                    c = temp % 0x100;
                                     break;
                                 case 0x1b:
-                                    lsb = Integer.toString(e,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(e, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(d,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(d, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
-                                    temp = Integer.parseInt(eff,16)-1;
-                                    s=0;
-                                    if (temp<0)
-                                    {
+                                    eff = hsb + lsb;
+                                    temp = Integer.parseInt(eff, 16) - 1;
+                                    s = 0;
+                                    if (temp < 0) {
                                         temp = -temp;
-                                        s=1;
+                                        s = 1;
                                     }
-                                    d = temp/0x100;
-                                    e = temp%0x100;
+                                    d = temp / 0x100;
+                                    e = temp % 0x100;
                                     break;
                                 case 0x2b:
-                                    lsb = Integer.toString(l,16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(h,16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
-                                    temp = Integer.parseInt(eff,16)-1;
-                                    s=0;
-                                    if (temp<0)
-                                    {
+                                    eff = hsb + lsb;
+                                    temp = Integer.parseInt(eff, 16) - 1;
+                                    s = 0;
+                                    if (temp < 0) {
                                         temp = -temp;
-                                        s=1;
+                                        s = 1;
                                     }
-                                    h = temp/0x100;
-                                    l = temp%0x100;
+                                    h = temp / 0x100;
+                                    l = temp % 0x100;
                                     break;
                                 case 0x3b:
                                     stack.sp--;
                                     break;
                                 case 0xc5:
-                                    stack.push(b,c);
+                                    stack.push(b, c);
                                     break;
                                 case 0xd5:
-                                    stack.push(d,e);
+                                    stack.push(d, e);
                                     break;
                                 case 0xe5:
-                                    stack.push(h,l);
+                                    stack.push(h, l);
                                     break;
                                 case 0xc1:
                                     int a1[] = stack.pop();
-                                    b=a1[0];
-                                    c=a1[1];
+                                    b = a1[0];
+                                    c = a1[1];
                                     break;
                                 case 0xd1:
                                     a1 = stack.pop();
-                                    d=a1[0];
-                                    e=a1[1];
+                                    d = a1[0];
+                                    e = a1[1];
                                     break;
                                 case 0xe1:
                                     a1 = stack.pop();
-                                    h=a1[0];
-                                    l=a1[1];
+                                    h = a1[0];
+                                    l = a1[1];
                                     break;
                                 case 0xcd:
-                                    lsb = Integer.toString(opcodes.get(i+1),16);
-                                    if (lsb.length()==1)
-                                    {
-                                        lsb="0"+lsb;
+                                    lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
                                     }
-                                    hsb = Integer.toString(opcodes.get(i+2),16);
-                                    if (hsb.length()==1)
-                                    {
-                                        hsb="0"+hsb;
+                                    hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
                                     }
-                                    eff = hsb+lsb;
-                                    stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
-                                    i = Integer.parseInt(eff,16)-1;
+                                    eff = hsb + lsb;
+                                    stack.push(Integer.parseInt(Integer.toHexString((i + 1)).substring(0, 1), 16), Integer.parseInt(Integer.toHexString((i + 1)).substring(2, 3), 16));
+                                    i = Integer.parseInt(eff, 16) - 1;
                                     break;
                                 case 0xdc:
-                                    if (carry==1)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (carry == 1) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
-                                        i = Integer.parseInt(eff,16)-1;
+                                        eff = hsb + lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i + 1)).substring(0, 1), 16), Integer.parseInt(Integer.toHexString((i + 1)).substring(2, 3), 16));
+                                        i = Integer.parseInt(eff, 16) - 1;
                                     }
                                     break;
                                 case 0xfc:
-                                    if (s==1)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (s == 1) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
-                                        i = Integer.parseInt(eff,16)-1;
+                                        eff = hsb + lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i + 1)).substring(0, 1), 16), Integer.parseInt(Integer.toHexString((i + 1)).substring(2, 3), 16));
+                                        i = Integer.parseInt(eff, 16) - 1;
                                     }
                                     break;
                                 case 0xd4:
-                                    if (carry==0)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (carry == 0) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
-                                        i = Integer.parseInt(eff,16)-1;
+                                        eff = hsb + lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i + 1)).substring(0, 1), 16), Integer.parseInt(Integer.toHexString((i + 1)).substring(2, 3), 16));
+                                        i = Integer.parseInt(eff, 16) - 1;
                                     }
                                     break;
                                 case 0xc4:
-                                    if (z==0)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (z == 0) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
-                                        i = Integer.parseInt(eff,16)-1;
+                                        eff = hsb + lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i + 1)).substring(0, 1), 16), Integer.parseInt(Integer.toHexString((i + 1)).substring(2, 3), 16));
+                                        i = Integer.parseInt(eff, 16) - 1;
                                     }
                                     break;
                                 case 0xf4:
-                                    if (s==0)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (s == 0) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
-                                        i = Integer.parseInt(eff,16)-1;
+                                        eff = hsb + lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i + 1)).substring(0, 1), 16), Integer.parseInt(Integer.toHexString((i + 1)).substring(2, 3), 16));
+                                        i = Integer.parseInt(eff, 16) - 1;
                                     }
                                     break;
                                 case 0xfe:
-                                    temp = opcodes.get(i+1);
-                                    if (accumulator==temp)
-                                    {
-                                        z=1;
-                                    }
-                                    else if (accumulator<temp)
-                                    {
-                                        carry=1;
-                                    }
-                                    else
-                                    {
-                                        carry=0;
-                                        z=0;
+                                    temp = opcodes.get(i + 1);
+                                    if (accumulator == temp) {
+                                        z = 1;
+                                    } else if (accumulator < temp) {
+                                        carry = 1;
+                                    } else {
+                                        carry = 0;
+                                        z = 0;
                                     }
                                     break;
                                 case 0xcc:
-                                    if (z==1)
-                                    {
-                                        lsb = Integer.toString(opcodes.get(i+1),16);
-                                        if (lsb.length()==1)
-                                        {
-                                            lsb="0"+lsb;
+                                    if (z == 1) {
+                                        lsb = Integer.toString(opcodes.get(i + 1), 16);
+                                        if (lsb.length() == 1) {
+                                            lsb = "0" + lsb;
                                         }
-                                        hsb = Integer.toString(opcodes.get(i+2),16);
-                                        if (hsb.length()==1)
-                                        {
-                                            hsb="0"+hsb;
+                                        hsb = Integer.toString(opcodes.get(i + 2), 16);
+                                        if (hsb.length() == 1) {
+                                            hsb = "0" + hsb;
                                         }
-                                        eff = hsb+lsb;
-                                        stack.push(Integer.parseInt(Integer.toHexString((i+1)).substring(0,1),16),Integer.parseInt(Integer.toHexString((i+1)).substring(2,3),16));
-                                        i = Integer.parseInt(eff,16)-1;
+                                        eff = hsb + lsb;
+                                        stack.push(Integer.parseInt(Integer.toHexString((i + 1)).substring(0, 1), 16), Integer.parseInt(Integer.toHexString((i + 1)).substring(2, 3), 16));
+                                        i = Integer.parseInt(eff, 16) - 1;
                                     }
                                     break;
+                                case 0x1f:
+                                    byte byt = (byte) accumulator;
+                                    String s1 = String.format("%8s", Integer.toBinaryString(byt & 0xFF)).replace(' ', '0');
+                                    s1 = Integer.toBinaryString(carry) + s1;
+                                    s1 = s1.substring(8) + s1.substring(0, 7);
+                                    carry = Integer.parseInt(s1.substring(0));
+                                    accumulator = Integer.parseInt(s1.substring(1, 8), 16);
+                                    break;
                                 case 0x17:
-
+                                    byt = (byte) accumulator;
+                                    s1 = String.format("%8s", Integer.toBinaryString(byt & 0xFF)).replace(' ', '0');
+                                    s1 = Integer.toBinaryString(carry) + s1;
+                                    s1 = s1.substring(1, 8) + s1.substring(0);
+                                    carry = Integer.parseInt(s1.substring(0));
+                                    accumulator = Integer.parseInt(s1.substring(1, 8), 16);
+                                    break;
+                                case 0x07:
+                                    byt = (byte) accumulator;
+                                    s1 = String.format("%8s", Integer.toBinaryString(byt & 0xFF)).replace(' ', '0');
+                                    s1 = s1.substring(1, 7) + s1.substring(0);
+                                    accumulator = Integer.parseInt(s1, 16);
+                                    break;
+                                case 0x0f:
+                                    byt = (byte) accumulator;
+                                    s1 = String.format("%8s", Integer.toBinaryString(byt & 0xFF)).replace(' ', '0');
+                                    s1 = s1.substring(7) + s1.substring(0,6);
+                                    accumulator = Integer.parseInt(s1, 16);
+                                    break;
                                 case 0xc9:
                                     a1 = stack.pop();
-                                    i=Integer.parseInt(Integer.toHexString(a1[0])+Integer.toHexString(a1[1]),16)-1;
+                                    i = Integer.parseInt(Integer.toHexString(a1[0]) + Integer.toHexString(a1[1]), 16) - 1;
+                                    break;
+                                case 0xf9:
+                                    stack.sp = Integer.parseInt(Integer.toHexString(h)+Integer.toHexString(l),16);
+                                    break;
+                                case 0x02:
+                                    lsb = Integer.toString(c, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
+                                    }
+                                    hsb = Integer.toString(b, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
+                                    }
+                                    eff = hsb + lsb;
+                                    memory.putInt(eff,accumulator);
+                                    break;
+                                case 0x12:
+                                    lsb = Integer.toString(e, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
+                                    }
+                                    hsb = Integer.toString(d, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
+                                    }
+                                    eff = hsb + lsb;
+                                    memory.putInt(eff,accumulator);
+                                    break;
+                                case 0x37:
+                                    carry = 1;
+                                    break;
+                                case 0xeb:
+                                    temp = h;
+                                    h = d;
+                                    d = temp;
+                                    temp = l;
+                                    l = e;
+                                    e = temp;
+                                    break;
+                                case 0xe3:
+                                    temp = l;
+                                    l = stack.array[stack.sp];
+                                    stack.array[stack.sp] = temp;
+                                    temp = h;
+                                    h = stack.array[stack.sp-1];
+                                    stack.array[stack.sp-1] = temp;
+                                    break;
+                                case 0x09:
+                                    lsb = Integer.toString(c, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
+                                    }
+                                    hsb = Integer.toString(b, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
+                                    }
+                                    eff = hsb + lsb;
+                                    temp = Integer.parseInt(eff,16);
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
+                                    }
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
+                                    }
+                                    eff = hsb + lsb;
+                                    temp = temp + Integer.parseInt(eff,16);
+                                    if(Integer.toBinaryString(temp).length()>16)
+                                    {
+                                        carry = 1;
+                                        temp = Integer.parseInt(Integer.toBinaryString(temp).substring(1,16));
+                                    }
+                                    s1 = String.format("%16s", Integer.toBinaryString(temp & 0xFF)).replace(' ', '0');
+                                    h = Integer.parseInt(s1.substring(0,7),16);
+                                    l = Integer.parseInt(s1.substring(8,15),16);
+                                    break;
+                                case 0x19:
+                                    lsb = Integer.toString(e, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
+                                    }
+                                    hsb = Integer.toString(d, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
+                                    }
+                                    eff = hsb + lsb;
+                                    temp = Integer.parseInt(eff,16);
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
+                                    }
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
+                                    }
+                                    eff = hsb + lsb;
+                                    temp = temp + Integer.parseInt(eff,16);
+                                    if(Integer.toBinaryString(temp).length()>16)
+                                    {
+                                        carry = 1;
+                                        temp = Integer.parseInt(Integer.toBinaryString(temp).substring(1,16));
+                                    }
+                                    s1 = String.format("%16s", Integer.toBinaryString(temp & 0xFF)).replace(' ', '0');
+                                    h = Integer.parseInt(s1.substring(0,7),16);
+                                    l = Integer.parseInt(s1.substring(8,15),16);
+                                    break;
+                                case 0x29:
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
+                                    }
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
+                                    }
+                                    eff = hsb + lsb;
+                                    temp = Integer.parseInt(eff,16);
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + lsb;
+                                    }
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + hsb;
+                                    }
+                                    eff = hsb + lsb;
+                                    temp = temp + Integer.parseInt(eff,16);
+                                    if(Integer.toBinaryString(temp).length()>16)
+                                    {
+                                        carry = 1;
+                                        temp = Integer.parseInt(Integer.toBinaryString(temp).substring(1,16));
+                                    }
+                                    s1 = String.format("%16s", Integer.toBinaryString(temp & 0xFF)).replace(' ', '0');
+                                    h = Integer.parseInt(s1.substring(0,7),16);
+                                    l = Integer.parseInt(s1.substring(8,15),16);
+                                    break;
+                                case 0x9f:
+                                    accumulator -= accumulator-s;
+                                    s=0;
+                                    if (accumulator<0)
+                                    {
+                                        accumulator = -accumulator;
+                                        s=1;
+                                    }
+                                    break;
+                                case 0x98:
+                                    accumulator -= b-s;
+                                    s=0;
+                                    if (accumulator<0)
+                                    {
+                                        accumulator = -accumulator;
+                                        s=1;
+                                    }
+                                    break;
+                                case 0x99:
+                                    accumulator -= c-s;
+                                    s=0;
+                                    if (accumulator<0)
+                                    {
+                                        accumulator = -accumulator;
+                                        s=1;
+                                    }
+                                    break;
+                                case 0x9a:
+                                    accumulator -= d-s;
+                                    s=0;
+                                    if (accumulator<0)
+                                    {
+                                        accumulator = -accumulator;
+                                        s=1;
+                                    }
+                                    break;
+                                case 0x9b:
+                                    accumulator -= e-s;
+                                    s=0;
+                                    if (accumulator<0)
+                                    {
+                                        accumulator = -accumulator;
+                                        s=1;
+                                    }
+                                    break;
+                                case 0x9c:
+                                    accumulator -= h-s;
+                                    s=0;
+                                    if (accumulator<0)
+                                    {
+                                        accumulator = -accumulator;
+                                        s=1;
+                                    }
+                                    break;
+                                case 0x9d:
+                                    accumulator -= l-s;
+                                    s=0;
+                                    if (accumulator<0)
+                                    {
+                                        accumulator = -accumulator;
+                                        s=1;
+                                    }
+                                    break;
+                                case 0x9e:
+                                    lsb = Integer.toString(l, 16);
+                                    if (lsb.length() == 1) {
+                                        lsb = "0" + l;
+                                    }
+                                    hsb = Integer.toString(h, 16);
+                                    if (hsb.length() == 1) {
+                                        hsb = "0" + h;
+                                    }
+                                    m = hsb + lsb;
+                                    accumulator -= memory.getInt(m)-1;
+                                    s=0;
+                                    if (accumulator<0)
+                                    {
+                                        accumulator = -accumulator;
+                                        s=1;
+                                    }
+                                    break;
+                                case 0xde:
+                                    accumulator -= opcodes.get(i + 1)-s;
+                                    s = 0;
+                                    if (accumulator<0) {
+                                        accumulator = -accumulator;
+                                        s = 1;
+                                    }
+                                    i++;
                                     break;
                                 default:
-                                    Toast.makeText(MainActivity.this,"Under development not all features emulated",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivity.this, "Under development not all features emulated", Toast.LENGTH_LONG).show();
                             }
-                        }
                     }
                     go=0;
                     add.setText("");
@@ -2362,8 +2361,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStart() {
         super.onStart();
-        reset=1;
-        sub=1;
+        sub=0;
         go=0;
     }
 

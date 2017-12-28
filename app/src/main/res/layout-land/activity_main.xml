@@ -8,7 +8,8 @@
     android:id="@+id/drawable">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/back">
 
 
         <Button
@@ -210,9 +211,13 @@
             android:layout_above="@+id/b"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/textview"
             android:hint="address"
             android:maxLength="4"
-            android:textColor="@color/colorAccent"
+            android:paddingLeft="10dp"
+            android:textColor="@color/text"
+            android:textColorLink="@color/text"
             android:textSize="25sp" />
 
         <TextView
@@ -222,11 +227,14 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/n1"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginStart="8dp"
+            android:background="@drawable/textview"
             android:hint="data"
             android:maxLength="2"
-            android:textColor="@color/colorAccent"
+            android:paddingLeft="10dp"
+            android:textColor="@color/text"
+            android:textColorLink="@color/text"
             android:textSize="25sp" />
     </RelativeLayout>
     <android.support.design.widget.NavigationView
