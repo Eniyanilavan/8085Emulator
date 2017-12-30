@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.eniyanilavan.a8085emulator"
+        applicationId "com.finished.eniyanilavan.a8085emulator"
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
