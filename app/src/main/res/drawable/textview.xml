@@ -6,7 +6,7 @@
     </corners>
     <stroke
         android:color="@color/text"
-        android:width="2dp">
+        android:width="3dp">
 
     </stroke>
 </shape>

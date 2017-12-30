@@ -1,6 +1,12 @@
 package com.example.eniyanilavan.a8085emulator;
 
+import android.content.ActivityNotFoundException;
+import android.content.ContentUris;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.graphics.pdf.PdfRenderer;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +21,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import static android.widget.Toast.LENGTH_SHORT;
 import static java.lang.Math.E;
@@ -53,12 +60,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     boolean nextpoint=false;
+    File file;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         drawer = (DrawerLayout)findViewById(R.id.drawable);
+        file = new File("android.resource://com.example.eniyanilavan.a8085emulator/assets/opcode.pdf");
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this,drawer,R.string.open,R.string.close);
         add = (TextView)findViewById(R.id.address);
         data= (TextView)findViewById(R.id.data);
@@ -84,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         a[19]=(Button)findViewById(R.id.n3);
         drawer.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+//        PdfRenderer.Page
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         navigationView= (NavigationView)findViewById(R.id.nav_bar);
         navigationView.setNavigationItemSelectedListener(this);
@@ -95,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 data.setText("");
                 sub=0;
                 go=0;
+                nextpoint = false;
 
             }
         });
@@ -498,6 +509,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         a[15].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (memory.containsKey(add.getText().toString()))
+                {
+                    nextpoint = true;
+                }
                 if (nextpoint) {
                     if (!(add.getText().toString().equals(""))) {
                         int next = Integer.parseInt(add.getText().toString(), 16) + 1;
@@ -1731,19 +1746,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     stack.sp = Integer.parseInt(hsb, 16) + Integer.parseInt(lsb, 16);
                                     i += 2;
                                     break;
-//                                case 0xcd:
-//                                    lsb = Integer.toString(opcodes.get(i+1),16);
-//                                    if (lsb.length()==1)
-//                                    {
-//                                        lsb="0"+lsb;
-//                                    }
-//                                    hsb = Integer.toString(opcodes.get(i+2),16);
-//                                    if (hsb.length()==1)
-//                                    {
-//                                        hsb="0"+hsb;
-//                                    }
-//                                    i = Integer.parseInt(hsb,16)+Integer.parseInt(lsb,16);
-//                                    break;
                                 case 0x2f:
                                     accumulator = ~accumulator;
                                     break;
@@ -2353,7 +2355,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             }
                     }
                     go=0;
-                    add.setText("");
+                    add.setText("E");
                 }
             }
         });
@@ -2388,11 +2390,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             data.setText("");
             nextpoint=false;
             drawer.closeDrawer(navigationView);
+            Toast.makeText(MainActivity.this,"cleared",Toast.LENGTH_LONG).show();
         }
-        if (id == R.id.hl)
+        else if (id == R.id.hl)
         {
             Toast.makeText(MainActivity.this,"Refer Internet",Toast.LENGTH_LONG).show();
             drawer.closeDrawer(navigationView);
+        }
+        else if (id==R.id.opc)
+        {
+                drawer.closeDrawer(navigationView);
+                startActivity(new Intent(MainActivity.this,pdfview.class));
+        }
+        else if (id==R.id.about)
+        {
+            drawer.closeDrawer(navigationView);
+            startActivity(new Intent(MainActivity.this,about.class));
         }
         return false;
     }

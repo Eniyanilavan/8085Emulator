@@ -15,5 +15,10 @@
         android:title="CLEAR MEMORY">
 
     </item>
+    <item
+        android:id="@+id/about"
+        android:title="ABOUT">
+
+    </item>
 
 </menu>

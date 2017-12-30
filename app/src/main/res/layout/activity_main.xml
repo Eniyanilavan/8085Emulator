@@ -211,11 +211,10 @@
 
         <TextView
             android:id="@+id/address"
-            android:layout_width="match_parent"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="29dp"
+            android:layout_marginTop="80dp"
             android:layout_toLeftOf="@+id/e"
             android:layout_toStartOf="@+id/e"
             android:background="@drawable/textview"
@@ -223,7 +222,7 @@
             android:maxLength="4"
             android:paddingLeft="10dp"
             android:textColor="@color/text"
-            android:textColorHint="@android:color/white"
+            android:textColorHint="@color/text"
             android:textColorLink="@color/text"
             android:textSize="25sp" />
 
@@ -242,7 +241,8 @@
             android:maxLength="2"
             android:paddingLeft="10dp"
             android:textColor="@color/text"
-            android:textColorHint="@android:color/white"
+            android:textColorHint="@color/text"
+            android:textColorLink="@color/text"
             android:textSize="25sp" />
     </RelativeLayout>
 
